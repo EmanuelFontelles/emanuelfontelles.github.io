@@ -1,6 +1,8 @@
 ---
-layout: single
-title: This is ArchLinux - Instalation Guide 
+title: "This is ArchLinux - Instalation Guide"
+subtitle: "A quick introduction"
+layout: post
+tags : [archlinux, instalation, guide]
 ---
 
 # ArchLinux welcome to freedom
