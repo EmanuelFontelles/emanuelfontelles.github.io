@@ -5,7 +5,8 @@ layout: post
 tags : [machine-learning, manifold-learning, tsne, t-distributed Stochastic Neighbor Embedding, multidimensional-scaling]
 
 ---
-# t-distributed Stochastic Neighbor Embedding
+
+# Using t-SNE to visualize similar words from texts
 
 
 First of all install dependencies
@@ -25,8 +26,6 @@ import numpy as np
 import matplotlib.pyplot as plt
  
 from sklearn.manifold import TSNE
-
-# %matplotlib notebook
 ```
 
 The data can be downloaded from command prompt:
@@ -34,7 +33,7 @@ The data can be downloaded from command prompt:
 ```bash
 $ wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
 ```
-
+Now we can train the our model directly using `gensim` a python module with support to word2vec.
 
 ```python
 model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin.gz', binary=True)
