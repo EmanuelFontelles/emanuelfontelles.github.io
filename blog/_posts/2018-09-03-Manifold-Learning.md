@@ -3,7 +3,7 @@ title: "Manifold Learning"
 subtitle: "t-SNE "
 layout: post
 tags : [machine-learning, manifold-learning, tsne, t-distributed Stochastic Neighbor Embedding, multidimensional-scaling]
-fb-img: ../figs/2018-09-03-Manifold-Learning/cover.png
+
 ---
 # t-distributed Stochastic Neighbor Embedding
 
@@ -125,14 +125,6 @@ model.similar_by_word('computer')
       5.66406250e-02 -1.04492188e-01  1.38671875e-01 -1.57226562e-01
       3.23486328e-03 -4.80957031e-02 -2.48046875e-01 -6.20117188e-02]
 
-
-    /usr/lib/python3.7/site-packages/gensim/matutils.py:737: FutureWarning: Conversion of the second argument of issubdtype from `int` to `np.signedinteger` is deprecated. In future, it will be treated as `np.int64 == np.dtype(int).type`.
-      if np.issubdtype(vec.dtype, np.int):
-
-
-
-
-
     [('computers', 0.79793781042099),
      ('laptop', 0.6640492081642151),
      ('laptop_computer', 0.6548866629600525),
@@ -185,11 +177,6 @@ def display_closestwords_tsnescatterplot(model, word):
 display_closestwords_tsnescatterplot(model, 'life')
 ```
 
-    /usr/lib/python3.7/site-packages/gensim/matutils.py:737: FutureWarning: Conversion of the second argument of issubdtype from `int` to `np.signedinteger` is deprecated. In future, it will be treated as `np.int64 == np.dtype(int).type`.
-      if np.issubdtype(vec.dtype, np.int):
-
-
-
-![png](output_7_1.png)
+![png](../figs/2018-09-03-Manifold-Learning/output_7_1.png)
 
 
