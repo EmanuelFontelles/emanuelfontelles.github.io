@@ -30,8 +30,9 @@ from sklearn.manifold import TSNE
 ```
 
 The data can be downloaded from command prompt:
+
 ```bash
-wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
+$ wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
 ```
 
 
