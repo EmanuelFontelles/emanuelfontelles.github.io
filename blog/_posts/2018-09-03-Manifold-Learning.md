@@ -179,10 +179,3 @@ display_closestwords_tsnescatterplot(model, 'life')
 ```
 
 ![png](/blog/figs/2018-09-03-Manifold-Learning/output_7_1.png)
-
-
-<center>
-<img src="/blog/figs/2018-08-17-archlinux-instalation/cover.png" alt="Cover" >
-<br>
-<em> <a href="https://wiki.archlinux.org/index.php/Arch_Linux"> Read more </a>ArchLinux</em> page.
-</center>
