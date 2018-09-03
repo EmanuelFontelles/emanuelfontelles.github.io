@@ -3,6 +3,7 @@ title: "Manifold Learning"
 subtitle: "t-SNE "
 layout: post
 tags : [machine-learning, manifold-learning, tsne, t-distributed Stochastic Neighbor Embedding, multidimensional-scaling]
+fb-img: ../figs/2018-09-03-Manifold-Learning/cover.png
 ---
 # t-distributed Stochastic Neighbor Embedding.
 
