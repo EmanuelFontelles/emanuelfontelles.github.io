@@ -5,7 +5,7 @@ layout: post
 tags : [machine-learning, manifold-learning, tsne, t-distributed Stochastic Neighbor Embedding, multidimensional-scaling]
 fb-img: ../figs/2018-09-03-Manifold-Learning/cover.png
 ---
-# t-distributed Stochastic Neighbor Embedding.
+# t-distributed Stochastic Neighbor Embedding
 
 t-SNE [1] is a tool to visualize high-dimensional data. It converts similarities between data points to joint probabilities and tries to minimize the Kullback-Leibler divergence between the joint probabilities of the low-dimensional embedding and the high-dimensional data. t-SNE has a cost function that is not convex, i.e. with different initializations we can get different results.
 
