@@ -435,7 +435,7 @@ ax.grid()
 ```
 
 
-![png](output_21_0.png)
+![png](/blog/figs/2018-09-11-Principal-Component-Analysis/output_21_0.png)
 
 
 The three classes appear to be well separated! 
