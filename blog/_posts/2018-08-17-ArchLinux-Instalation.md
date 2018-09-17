@@ -39,7 +39,9 @@ The new common way to install operational systems as Linux Systems or even Micro
     
 if the directory does not exist, the system may be booted in BIOS or CSM mode.
 
-## Internet connection
+## Setup the enviromment
+
+### Internet connection
 
 The ArchLinux instalation enables the `dhcpcd` daemon for wired network devices on boot. The connection may be verified with ping:
 
@@ -49,85 +51,76 @@ If you have a wifi connection, you can try `wifi-menu` and setup a wireless conn
 
     wifi-menu
 
-## Create partitions
+### Create partitions
 
-    cgdisk /dev/sda
-    1 512MB EFI partition # Hex code ef00
-    2 100% size partiton # (to be encrypted) Hex code 8300
-    You might have to use hexcode: 8e00
-    8300 causes errors sometimes.
-   
-### Create EFI partition
+This part can be a realy trick one. ArchLinux need just to partition, the `\boot` partition (that needs to be format as **FAT32**) and the `\`, the root partition. You can create more as `\home` partition that keeps the users data.
+
+To create the partitions I'll use `fdisk`, a simple manager to create a table partition. You can use `cfdisk` if you want. First, identify the label of yours partitions
+
+    fdisk -l
+    
+the command above will show the disk attached to your computer such as `/dev/sda` or `/dev/nvme0n1`. Now you can create a new table of partition as GPT partition table, with to partition, `\boot` and `\`.
+
+    fdisk /dev/sda
+you can learn about fdisk [here](https://wiki.archlinux.org/index.php/Fdisk). Basically you have to create a 500 Mb partition to that will be a boot partition and the rest to root partition. The result will be something like this:
+
+    Disk /dev/sda: 465.8 GiB, 500107862016 bytes, 976773168 sectors
+    Units: sectors of 1 * 512 = 512 bytes
+    Sector size (logical/physical): 512 bytes / 512 bytes
+    I/O size (minimum/optimal): 512 bytes / 512 bytes
+    Disklabel type: gpt
+    Disk identifier: 7D918645-8068-4E41-AB42-A411242F4546
+
+    Device         Start       End   Sectors   Size Type
+    /dev/sda1       2048   1023999   1021952   499M EFI System
+    /dev/sda2    1023999 976773119 659331072 464.4G Linux filesystem
+
+
+### Format the partitions
+Once the partitions have been created, each must be formatted with an appropriate file system. For example, to format the boot partition on `/dev/sda1` with `FAT32`, run:
 
     mkfs.vfat -F32 -n EFI /dev/sda1
 
-### Setup the encryption of the system with 256 bit effective size
+and to format the root partition on `/dev/sda2` with `ext4`, run:
 
-Note: Many NVMe drives can exceed 2GB/s, consider your crypto algorithm wisely, review `cryptsetup benchmark`, the defaults are viewable end of  `cryptsetup --help`, defaults are commonly the fastest with good security from my experience with cryptsetup (AES 256, sha256, 2000ms)
-  
-    cryptsetup --use-random luksFormat /dev/sda2
+    mkfs.ext4 /dev/sda2
+
+### Mount the new system
+Now it's time to mount the file system on the root partition to `/mnt`, for example:
+
+    mount /dev/sda2 /mnt
     
-    or if you want better encryption like me: Use cryptsetup -c aes-xts-plain64 -s 512 -h sha384 -i 2500 --use-random luksFormat /dev/sdXX
-    
-    cryptsetup luksOpen /dev/sda2 luks
-    
-        Also when it asks "are you sure, make sure you type captial yes. example: YES
+Once the file system was mounted, we can create a different folder that will contain the `boot` files
 
-
-### Create encrypted partitions
-
-This creates one partions for root, modify if /home or other partitions should be on separate partitions
-
-    pvcreate /dev/mapper/luks
-    vgcreate vg0 /dev/mapper/luks
-    lvcreate --size 16G vg0 --name swap
-    lvcreate -l +100%FREE vg0 --name root
-
-### Create filesystems on encrypted partitions
-  
-    mkfs.ext4 -L root /dev/mapper/vg0-root
-    mkswap /dev/mapper/vg0-swap
-
-## Mount the new system
-
-    mount /dev/mapper/vg0-root /mnt # /mnt is the installed system
-    swapon /dev/mapper/vg0-swap # Not needed but a good thing to test
     mkdir /mnt/boot
     mount /dev/sda1 /mnt/boot
 
-## Install the system 
+We finished the enviromment to create the ArchLinux instalation.
 
-Also includes stuff needed for starting wifi when first booting into the newly installed system
-Unless vim and zsh are desired these can be removed from the command. Dialog is needed by wifi-menu
+## Installing the system 
 
-    pacstrap /mnt base base-devel git sudo efibootmgr dialog wpa_supplicant tmux intel-ucode networkmanager net-tools
+ArchLinux is an rolling release distribution which means that we don't have an specific version. So, to install the entire system with a minimal base package we can do
 
-Note: I removed "zsh" and "neovim", because I like 'bash' and 'vi'. I also added networkmanager so ethernet will work on boot. 
-May 27 EDIT: Added net-tools so you can use ifconfig on boot to find your IPv4 for SSH.
+    pacstrap /mnt base base-devel
 
-## Generate fstab
+### Generate fstab
 
-    genfstab -pU /mnt | tee -a /mnt/etc/fstab
+    genfstab -U /mnt >> /mnt/etc/fstab
 
-### Make /tmp a ramdisk (add the following line to /mnt/etc/fstab)
-tmpfs	/tmp	tmpfs	defaults,noatime,mode=1777	0	0
+### Enter the new system
 
-Also change relatime on all non-boot partitions to noatime (reduces wear if using an SSD)
-
-## Enter the new system
-
-    arch-chroot /mnt /bin/bash
-
-## Setup system clock
+    arch-chroot /mnt 
+    
+### Setup system clock
 
     ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
     hwclock --systohc --utc
 
-## Set the hostname
+### Set the hostname
 
     echo MYHOSTNAME > /etc/hostname
 
-## Generate locale
+### Generate locale
 
 Uncomment wanted locales in /etc/locale.gen
 
