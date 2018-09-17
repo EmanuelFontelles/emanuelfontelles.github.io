@@ -40,7 +40,7 @@ The new common way to install operational systems as Linux Systems or even Micro
     
 if the directory does not exist, the system may be booted in BIOS or CSM mode.
 
-## Setup the enviromment
+## Setup the environment
 
 ### Internet connection
 
@@ -97,7 +97,7 @@ Once the file system was mounted, we can create a different folder that will con
     mkdir /mnt/boot
     mount /dev/sda1 /mnt/boot
 
-We finished the enviromment to create the ArchLinux installation.
+We finished the environment to create the ArchLinux installation.
 
 ## Installing the system 
 
