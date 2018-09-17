@@ -9,17 +9,20 @@ tags : [archlinux, instalation, guide]
 
 When I started to work with computers and Linux based systems, I found myself in Ubuntu distributions, Ubuntu 10.04 was one of the bests. With time and experience I tried Debian OS, Elementary OS, LinuxMint OS, RedHat, but all theses systems seems to be the same. I don't know but I can't stop to search for the best distro for me. Until the ArchLinux show up!
 
-<figure>
-    <img src="/blog/figs/2018-08-17-archlinux-instalation/cover.png"  width="304" height="228" alt="Cover" >
-    <br>
-    <em> <a href="https://wiki.archlinux.org/index.php/Arch_Linux"> Read more </a>ArchLinux</em> page.
-</figure>
+<center>
+    <figure>
+        <img src="/blog/figs/2018-08-17-archlinux-instalation/cover.png"  width="304" height="228" alt="Cover" >
+        <br>
+        <em> <a href="https://wiki.archlinux.org/index.php/Arch_Linux"> Read more </a>ArchLinux</em> page.
+    </figure>
+</center>    
 
-My intention here is provide a simple instalation guide that will help you to understand how Arch philosophy works. The official installation guide (https://wiki.archlinux.org/index.php/Installation_Guide) is the better way to understand the full instalation of Arch.
+My intention here is provide a simple instalation guide that will help you to understand how Arch philosophy works. The [official installation guide](https://wiki.archlinux.org/index.php/Installation_Guide) is the better way to understand the full instalation of Arch.
 
 ## Download the Arch ISO
+First of all we can download the ISO from Archlinux website
 
-* Image from https://www.archlinux.org/
+* Image from https://www.archlinux.org/download/
 
 ### Copy to a USB drive
 
