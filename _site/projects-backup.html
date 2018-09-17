@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Projects</title>
+
+  <meta name="author" content="Emanuel Fontelles" />
+
+  
+  <meta name="description" content="Blogs, presentations, open knowledege, research."/>
+  
+
+<!-- Add favicon -->
+<link rel="shortcut icon" 
+      type="image/png" 
+      href="/favicon.png" >
+
+  <link rel="alternate" type="application/rss+xml" title="Emanuel Fontelles - Emanuel's personal web page" href="/feed.xml" />
+
+<!-- everything has to be repeated twice because on 2016-02-01 GitHub pages migrated to jekyll 3; see bug https://github.com/jekyll/jekyll/issues/4439 -->
+
+  
+  
+    
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    
+  
+
+  
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  <!-- Facebook OpenGraph tags -->
+  <meta property="og:title" content="Projects" />
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:description" content="Blogs, presentations, open knowledege, research." />
+  
+
+  
+  <meta property="og:url" content="http://localhost:4000/projects-backup" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/images/emanuel.png" />
+  
+
+  <!-- Twitter tags -->
+  <meta name="twitter:card" content="summary" />
+
+      <!-- Scripts for ggvis from http://ggvis.rstudio.com/0.1/interactivity.html-->
+  <!-- ggvis stuff -->
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/jquery-1.11.0.min.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/jquery-ui/js/jquery-ui-1.10.4.custom.min.js"></script>
+  <script charset="utf-8" src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/d3.min.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/vega.min.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/QuadTree.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/lodash.min.js"></script>
+  <script>var lodash = _.noConflict();</script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/js/ggvis.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/jquery-ui/css/smoothness/jquery-ui-1.10.4.custom.min.css"/>
+  <link rel="stylesheet" type="text/css" href="http://ggvis.rstudio.com/0.1/libs/ggvis/css/ggvis.css"/>
+  <!-- end of ggvis scripts-->
+
+
+</head>
+
+
+  <body>
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://localhost:4000">Emanuel Fontelles</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+	    
+        <li>
+		  <a href="/">Home</a>
+		</li>
+		
+        <li>
+		  <a href="/projects.html">Projects</a>
+		</li>
+		
+        <li>
+		  <a href="/aboutme.html">About Me</a>
+		</li>
+		
+      </ul>
+    </div>
+	
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000 ">
+	      <img class="avatar-img" src="/images/emanuel.png" />
+		</a>
+	  </div>
+	</div>
+	
+	
+  </div>
+</nav>  
+
+    <div role="main" class="container main-content">
+      
+<header class="header-page">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	  <div class="page-heading">
+	    <h1>Projects</h1>
+	    
+	    <hr class="small">
+	    <span class="page-subheading">Blogs, presentations, open knowledege, research.</span>
+	    
+	  </div>
+    </div>
+  </div>
+</header>
+
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!--
+## Projects by themes
+
+* [Open source tools for open data](#opentools)
+* [Open knowledge](#openknow)
+* [Research on machine learning and bioinformatics](#research) (past)
+-->
+<!-- to be added:
+- asuntohinnat (link to blog post)
+- something from Avaus?
+-->
+
+<!--
+* [Open data science](#opends)
+
+## Open data science {#opends}
+
+
+* [Car accident data visualization][ifhackathon] (see my [blog post][ifhackathon-blog] about this)
+* [Using H2O big data platform to analyze CO2 emissions of cars][trafi]
+* [Big data cluster][bigdata] for automated deployment of open source big data platform locally or in the cloud
+[ifhackathon]: https://ouzor.shinyapps.io/ifhackathon/
+[ifhackathon-blog]: http://ouzor.github.io/blog/ifhackathon.html
+[Avaus]: http://www.avaus.fi/
+[bigdata]: https://github.com/avaus/bigdata-cluster
+[trafi]: http://www.avaus.fi/business/using-h2o-big-data-platform-to-analyze-co2-emissions-of-cars
+[documentation]: https://github.com/avaus/opendata/blob/master/trafi.md
+-->
+
+<h2 id="blogs">Blogs</h2>
+
+<p>In addition to my <a href="http://ouzor.github.io/">personal blog</a>, I’ve been contributing to these other blogs (some pieces published in multiple blogs):</p>
+
+<p><strong><a href="https://www.reaktor.com/blog/author/juuso_parkkinen/">Reaktor’s blog</a></strong></p>
+
+<ul>
+  <li><a href="https://www.reaktor.com/blog/what-did-we-learn-from-using-fitbits-for-a-year/">What did we learn from using Fitbits for a year?</a></li>
+  <li><a href="https://www.reaktor.com/blog/using-visualizations-to-communicate-data-science-case-cancer-risk-analysis/">Using visualizations to communicate data science – Case cancer risk analysis</a></li>
+  <li><a href="https://www.reaktor.com/blog/more-privacy-better-personalization/">More privacy and better personalization – a mission impossible?</a></li>
+  <li><a href="https://www.reaktor.com/blog/exploring-the-future-of-occupational-healthcare/">Exploring the future of occupational healthcare</a></li>
+</ul>
+
+<p><strong><a href="https://medium.com/me/stories/public">Medium</a></strong></p>
+
+<ul>
+  <li><a href="https://medium.com/mydata/ethics-and-mydata-from-theory-to-practice-52a93f643ed8">Ethics and MyData — from theory to practice</a></li>
+  <li><a href="https://medium.com/mydata/is-your-personal-data-used-to-influence-your-actions-541e1bc23ec6">Is Your Personal Data Used to Influence Your Actions?</a></li>
+  <li><a href="https://medium.com/mydata/openness-empowers-individuals-and-societies-44ee5678fe47">Openness Empowers Individuals and Societies</a></li>
+</ul>
+
+<p><strong>Other writings</strong></p>
+
+<ul>
+  <li><a href="https://www.inkubio.fi/snapsi2015/biodi.php">BioDI: Mitä yliopisto ei opettaut minulle?</a> - Kirjoitus Aalto-yliopiston Bioinformaatioteknologian kilta Inkubion lehdessä S’napsissa 3/2015.</li>
+</ul>
+
+<p><em>Check out <a href="http://www.r-bloggers.com/">R-bloggers</a> for interesting blogs related to the R language!</em></p>
+
+<h2 id="public-presentations">Public presentations</h2>
+
+<ul>
+  <li>Learnings from a company-wide Fitbit experiment in Quantified Employee seminar, 28.3.2017 (<a href="https://www.slideshare.net/ouzor/learnings-from-a-companywide-fitbit-experiment">slideshare</a>)</li>
+  <li>Data-driven leadership culture in DataBusiness challenge event, 20.1.2017 (<a href="https://www.slideshare.net/ouzor/datadriven-leadership-culture">slideshare</a>)</li>
+  <li>Hosting the Challenges in Big / Small Personal Data Analytics -session in the Mydata2016 conference, 2.10.2016.</li>
+  <li>Probabilistic programming for understanding regional trends in apartment prices in ICCSS2015, 11.5.2015. (<a href="http://ouzor.github.io/presentations/iccss_2015/iccss_reaktor_2015.html#1">slides</a>)</li>
+  <li>Lecture on data science in Tampere Technical University, 28.4.2015 (<a href="http://ouzor.github.io/presentations/tty_datascience_2015/tty_datascience_2015.html#1">slides</a>, <a href="http://ouzor.github.io/blog/2015/04/29/tty-datascience-lecture.html">blog</a>)</li>
+  <li>Kohti älykkäämpää fillarikaupunkia HSY:n paikkatietoseminaarissa, 11.3.2015 (<a href="https://www.slideshare.net/ouzor/hsy-2015-fillaridata">slides</a>)</li>
+</ul>
+
+<h2 id="open-knowledge">Open knowledge</h2>
+
+<p>I am a big fan of all things open, including open data, open source, and open science. Recently I’ve also been active in the <a href="https://mydata.org/">MyData</a> community. Below I have listed some open stuff that I’ve been involved in.</p>
+
+<p><strong>Open data science at Reaktor</strong></p>
+
+<ul>
+  <li>GIST cancer risk calculator: <a href="http://gistrisk.com/">web service</a>, <a href="https://www.reaktor.com/blog/using-visualizations-to-communicate-data-science-case-cancer-risk-analysis/">blog post</a></li>
+  <li>Kannattaakokauppa.fi (apartment price modeling and visualisation): <a href="http://kannattaakokauppa.fi/#/en/">web service</a>, <a href="http://ouzor.github.io/blog/2016/03/08/apartment-price-model.html">blog post</a>, interviews in Finnish: <a href="http://www.hs.fi/kaupunki/art-2000002890113.html">HS</a>, <a href="http://www.is.fi/asuminen/art-2000001133912.html">Iltasanomat</a></li>
+</ul>
+
+<p><strong>Open source projects and tools for open data</strong></p>
+
+<ul>
+  <li><a href="https://github.com/ropengov/helsinki">helsinki</a> - Helsinki open data R tools</li>
+  <li><a href="https://github.com/ropengov/gisfin">gisfin</a> - Finland GIS R tools</li>
+  <li><a href="https://github.com/ropengov/sorvi">sorvi</a> - Finnish open government data R tools</li>
+</ul>
+
+<p>Since 2011 I have been developing open source tools for processing, analyzing and visualizing open data with a few Finnish friends in the <a href="http://louhos.github.io/">Louhos</a> project. It all started with our <a href="http://louhos.github.io/sorvi/index.html">sorvi</a> R package winning the Apps4Finland 2011 data opening category. Since then, our <a href="http://louhos.github.io/">blog</a> (in Finnish; migrated from <a href="http://louhos.wordpress.com/">Wordpress</a> in June 2014) has received more than 30000 views and we’ve won also other prices in Apps4Finland. Currently we are  developing the <a href="http://ropengov.github.io/">rOpenGov</a> R ecosystem for open goverment data. We already have a lot of <a href="http://ropengov.github.io/projects/">packages</a> involved all around Europe and the US, and even more are being <a href="https://github.com/ropengov">developed</a>.</p>
+
+<!-- In Finland, the original [sorvi] package has been [split][] to several more focused packages. Personally I am most actively developing the [helsinki][] and [gisfin][] packages.-->
+
+<!--
+<a href='http://louhos.github.io/'><img class='inset2 right' src='https://avatars3.githubusercontent.com/u/1228310?v=2&s=200' title='Louhos' alt='Louhos' width='100px' />
+-->
+
+<!--
+<a href='http://ropengov.github.io/'><img class='inset2 right' src='http://ropengov.github.io/images/logo.png' title='rOpenGov' alt='rOpenGov' width='130px' />
+-->
+
+<p><strong>Achievements related to open data</strong></p>
+
+<ul>
+  <li><a href="http://datademo.fi/">Datademo</a> funding for the <a href="https://github.com/rOpenGov/helsinki">helsinki</a> and <a href="https://github.com/rOpenGov/gisfin">gisfin</a> packages. Details (in Finnish) <a href="http://datademo.fi/ensimmaisen-kierroksen-tulokset/">here</a> and <a href="http://datademo.fi/kevatkierroksen-tulokset/">here</a>. I was also interviewed in <a href="http://www.citiscope.org/story/2014/how-helsinki-mashed-open-data-regionalism">Citiscope</a> and in a <a href="https://www.youtube.com/watch?v=p733z0bUlnw">video</a>.</li>
+  <li>Apps4Finland 2013: Third place in the visualization category with the <a href="https://ouzor.shinyapps.io/sotkanet/">Alueellinen hyvinvointi-visualization</a> that was developed together with Juha Leppänen and Satu Korhonen from <a href="http://www.demoshelsinki.fi/kasi-ylos-jos-yhteiskunta-ja-data-kiinnostavat/">Demos Helsinki</a> think tank. <a href="http://www.apps4finland.fi/kilpailutyo/alueellinen-hyvinvointi/">Details (in Finnish)</a>.</li>
+  <li>Apps4Finland 2012: Victory in the data opening category (official and audience votes): Data elections (<a href="http://www.datavaalit.fi/">Datavaalit</a>). <a href="http://apps4finland.fi/2012/10/28/datan-avaus-datavaalit/">Details (in Finnish)</a>.</li>
+  <li>Apps4Finland 2012: Victory in the data guide category (audience votes): Finnish <a href="http://louhos.github.io/datawiki/">data wiki</a>. <a href="http://apps4finland.fi/2012/09/22/dataopas-suomalainen-datawiki/">Details (in Finnish)</a>.</li>
+  <li>Apps4Finland 2011: Victory in the data opening category (both official and audience votes): <a href="http://louhos.github.io/sorvi/index.html">sorvi</a> - R toolbox for open data. <a href="http://apps4finland.fi/2011/10/24/datan-avaus-sorvi-avoimen-datan-tyokalupakki-r-kielelle/">Details (in Finnish)</a>.</li>
+</ul>
+
+<!--
+## Open knowledge {#openknow}
+
+Open knowledges cover a wide set of topics from open data and science to democracy. [Open Knowledge Finland][okfi] (OKFFI) was founded few years ago to represent the emerging Finnish openness community. It works through working groups, and I'm also actively involved in some of these as listed below.
+
+**[My Data]** has emerged as an important topic on the side of open data. The working group recently produced a [My data survey][mydata-survey] that clarifies the related concepts nicely. An English version is coming in the future. I have also developed some [code] for analyzing personal data from various sources.
+
+**[Open science]** - the openness of research publications, data and code - is a really hot topic now. Problems in research reproducibility have raised the need for better and more open ways to conduct science. 
+
+[okfi]: http://fi.okfn.org/
+[My Data]: http://fi.okfn.org/wg/my-data/
+[mydata-survey]: http://www.lvm.fi/julkaisu/4420389/my-data-johdatus-ihmiskeskeiseen-henkilotiedon-hyodyntamiseen
+[code]: https://github.com/ouzor/mydata
+[Open Science]: http://fi.okfn.org/wg/openscience/
+-->
+
+<h2 id="research">Research on machine learning and bioinformatics</h2>
+
+<p>I finished my PhD studies in Aalto University in 2014. In my <a href="#theses">thesis</a> I developed machine learning methods for molecular biology and medicine applications.</p>
+
+<h3 id="software">Software</h3>
+
+<!-- Add toxgen -->
+
+<ul>
+  <li><a href="http://research.ics.aalto.fi/mi/software/ProbCMap/">ProbCMap</a> - Source code related to article <a href="http://www.biomedcentral.com/1471-2105/15/113/abstract">Probabilistic drug connectivity mapping</a></li>
+  <li><a href="http://www.cis.hut.fi/projects/mi/software/ICMg">ICMg</a> - Interation component model for gene modules. R packge related to article <a href="http://www.biomedcentral.com/1752-0509/4/4/abstract">Searching for functional gene modules with interaction component models</a>. ICMg is also included in the <a href="https://github.com/antagomir/netresponse">Netresponse</a> package.</li>
+  <li><a href="https://github.com/ouzor/eyediagram">Eyediagram</a> - Code for creating eyediagram visualizations</li>
+</ul>
+
+<h3 id="publications">Publications</h3>
+
+<p>Here some selected publications. See all of my publications in <a href="http://scholar.google.com/citations?user=4d5VBfkAAAAJ">Google Scholar</a>.</p>
+
+<!-- Doesn't look good...
+## Impact story profile
+<iframe src="https://impactstory.org/embed/JuusoParkkinen" width="600" height="600"></iframe>
+-->
+
+<!--
+**Probabilistic models for molecular biology and medicine**
+-->
+
+<p><strong>A transcriptomics data-driven gene space accurately predicts liver cytopathology and drug-induced liver injury</strong><br />
+Pekka Kohonen, Juuso A. Parkkinen, Egon L. Willighagen, Rebecca Ceder, Krister Wennerberg, Samuel Kaski &amp; Roland C. Grafström<br />
+Nature Communications 8, 15932 (2017)<br />
+<a href="doi:10.1038/ncomms15932">DOI</a> | <a href="https://zenodo.org/record/570115">code</a> | <a href="https://ouzor.github.io/blog/2017/08/14/predictive-toxicogenomics-paper.html">blog</a></p>
+
+<p><strong>Cross-organism toxicogenomics with group factor analysis</strong><br />
+Tommi Suvitaival, Juuso A Parkkinen, Seppo Virtanen, and Samuel Kaski<br />
+Systems Biomedicine 2014; 2:e29291<br />
+<a href="http://dx.doi.org/10.4161/sysb.29291">DOI</a> | <a href="http://research.ics.tkk.fi/mi/software/GFAtoxgen">code</a></p>
+
+<p><strong>Probabilistic drug connectivity mapping</strong><br />
+Juuso A Parkkinen and Samuel Kaski<br />
+BMC Bioinformatics 2014, 15:113<br />
+<a href="http://dx.doi.org/10.1186/1471-2105-15-113">DOI</a> | <a href="http://research.ics.aalto.fi/mi/software/ProbCMap/">code</a></p>
+
+<p><strong>Comprehensive data-driven analysis of the impact of chemoinformatic structure on the genome-wide biological response profiles of cancer cells to 1159 drugs</strong><br />
+Suleiman A Khan, Ali Faisal, John P Mpindi, Juuso A Parkkinen, Tuomo Kalliokoski, Antti Poso, Olli P Kallioniemi, Krister Wennerberg and Samuel Kaski<br />
+BMC Bioinformatics 2012, 13:112<br />
+<a href="http://dx.doi.org/10.1186/1471-2105-13-112">DOI</a></p>
+
+<!--
+## Probabilistic models for networks
+-->
+
+<p><strong>Graph Visualization With Latent Variable Models</strong><br />
+Juuso A Parkkinen, Kristian Nybo, Jaakko Peltonen and Samuel Kaski<br />
+In MLG ‘10: Proceedings of the Eighth Workshop on Mining and Learning with Graphs. Washington, D.C. 2010<br />
+<a href="http://dx.doi.org/10.1145/1830252.1830265">DOI</a></p>
+
+<p><strong>Searching for functional gene modules with interaction component models</strong><br />
+Juuso A Parkkinen and Samuel Kaski<br />
+BMC Systems Biology 2010, 4:4<br />
+<a href="http://dx.doi.org/10.1186/1752-0509-4-4">DOI</a> | <a href="http://www.cis.hut.fi/projects/mi/software/ICMg">code</a></p>
+
+<h3 id="theses">Theses</h3>
+
+<p><strong>Probabilistic components of molecular interactions and drug responses</strong><br />
+Doctoral thesis<br />
+Aalto University School of Science, Department of Information and Computer Science, September 2014<br />
+<a href="https://aaltodoc.aalto.fi/handle/123456789/13631">online</a> | <a href="https://aaltodoc.aalto.fi/bitstream/handle/123456789/13631/isbn9789526057743.pdf?sequence=1">PDF</a></p>
+
+<p><strong>Generative probabilistic models of biological and social network data</strong><br />
+Master’s thesis<br />
+Helsinki University of Technology, Department of Information and Computer Science, September 2009<br />
+<a href="https://aaltodoc.aalto.fi/handle/123456789/3104">online</a> | <a href="https://aaltodoc.aalto.fi/bitstream/handle/123456789/3104/urn100068.pdf?sequence=1">PDF</a></p>
+
+<p><strong>Äänenkorkeuden havaitsemisen hermostollinen perusta</strong><br />
+Bachelor’s thesis (in Finnish)<br />
+Helsinki University of Technology, Department of Electrical and Communications Engineering<br />
+<a href="https://aaltodoc.aalto.fi/handle/123456789/3371">online</a></p>
+
+<h3 id="other-research-related-stuff">Other research-related stuff</h3>
+
+<ul>
+  <li><a href="http://users.ics.aalto.fi/japarkki/">Aalto homepage</a></li>
+  <li><a href="https://people.aalto.fi/index.html?language=english#juuso_parkkinen">Aalto People page</a></li>
+  <li><a href="https://impactstory.org/JuusoParkkinen">ImpactStory</a></li>
+  <li><a href="https://www.researchgate.net/profile/Juuso_Parkkinen">ResearchGate</a></li>
+  <li><a href="http://orcid.org/0000-0002-7818-5901">ORCID: 0000-0002-7818-5901</a></li>
+  <li><a href="http://www.researcherid.com/rid/I-8411-2014">ResearcherID: I-8411-2014</a></li>
+  <li><a href="http://www.citeulike.org/author/Parkkinen:Juuso">CiteULike</a></li>
+</ul>
+
+
+	
+  </div>
+</div>
+
+    </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/emanuelfontelles" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  
+		  
+          <li>
+            <a href="mailto:emanuelfontelles@fisica.ufc.br" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://linkedin.com/in/emanuelfontelles" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/7821063/emanuel-fontelles" title="StackOverflow">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  		  
+        </ul>
+        <p class="copyright text-muted">
+		  Emanuel Fontelles
+		  &nbsp;&bull;&nbsp;
+		  2018
+		  
+		  
+	    </p>
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="https://github.com/daattali/beautiful-jekyll">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    <!-- everything has to be repeated twice because on 2016-02-01 GitHub pages migrated to jekyll 3; see bug https://github.com/jekyll/jekyll/issues/4439 -->
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/js/main.js"></script>
+    
+  
+
+
+
+
+  
+  </body>
+</html>

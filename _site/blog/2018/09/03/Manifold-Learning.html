@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Manifold Learning</title>
+
+  <meta name="author" content="Emanuel Fontelles" />
+
+  
+  <meta name="description" content="t-SNE "/>
+  
+
+<!-- Add favicon -->
+<link rel="shortcut icon" 
+      type="image/png" 
+      href="/favicon.png" >
+
+  <link rel="alternate" type="application/rss+xml" title="Emanuel Fontelles - Emanuel's personal web page" href="/feed.xml" />
+
+<!-- everything has to be repeated twice because on 2016-02-01 GitHub pages migrated to jekyll 3; see bug https://github.com/jekyll/jekyll/issues/4439 -->
+
+  
+  
+    
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    
+  
+
+  
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  <!-- Facebook OpenGraph tags -->
+  <meta property="og:title" content="Manifold Learning" />
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:description" content="t-SNE " />
+  
+
+  
+  <meta property="og:url" content="http://localhost:4000/blog/2018/09/03/Manifold-Learning.html" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/images/emanuel.png" />
+  
+
+  <!-- Twitter tags -->
+  <meta name="twitter:card" content="summary" />
+
+      <!-- Scripts for ggvis from http://ggvis.rstudio.com/0.1/interactivity.html-->
+  <!-- ggvis stuff -->
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/jquery-1.11.0.min.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/jquery-ui/js/jquery-ui-1.10.4.custom.min.js"></script>
+  <script charset="utf-8" src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/d3.min.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/vega.min.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/QuadTree.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/lodash.min.js"></script>
+  <script>var lodash = _.noConflict();</script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/js/ggvis.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/jquery-ui/css/smoothness/jquery-ui-1.10.4.custom.min.css"/>
+  <link rel="stylesheet" type="text/css" href="http://ggvis.rstudio.com/0.1/libs/ggvis/css/ggvis.css"/>
+  <!-- end of ggvis scripts-->
+
+
+</head>
+
+
+  <body>
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://localhost:4000">Emanuel Fontelles</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+	    
+        <li>
+		  <a href="/">Home</a>
+		</li>
+		
+        <li>
+		  <a href="/projects.html">Projects</a>
+		</li>
+		
+        <li>
+		  <a href="/aboutme.html">About Me</a>
+		</li>
+		
+      </ul>
+    </div>
+	
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000 ">
+	      <img class="avatar-img" src="/images/emanuel.png" />
+		</a>
+	  </div>
+	</div>
+	
+	
+  </div>
+</nav>  
+
+    <div role="main" class="container main-content">
+      <header class="header-post">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h1>Manifold Learning</h1>
+        
+        <h2 class="post-subheading">t-SNE </h2>
+        
+        <span class="post-meta">Posted on September 3, 2018</span>
+      </div>
+     </div>
+  </div>
+</header>
+
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	  <h1 id="using-t-sne-to-visualize-similar-words-from-texts">Using t-SNE to visualize similar words from texts</h1>
+
+<p>First of all install dependencies</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pip <span class="nb">install </span>gensim numpy matplotlib sklearn
+</code></pre></div></div>
+
+<p>We want to visualize the classification cluster from a data set, in our case it’s a text, and we expect to classify the words in the text to  clusters with same kind of information. Think of that, we can search for <code class="highlighter-rouge">computer</code> and we want to classify the words with same meaning, like <code class="highlighter-rouge">laptop</code>, <code class="highlighter-rouge">laptop-computer</code>, <code class="highlighter-rouge">pc</code>, even <code class="highlighter-rouge">Dell</code>.</p>
+
+<p>For do that we can use <strong><em>t-Distributed Stochastic Neighbor Embedding (t-SNE)</em></strong>. t-SNE technique for dimensionality reduction that is particularly well suited for the visualization of high-dimensional datasets. The technique can be implemented via Barnes-Hut approximations, allowing it to be applied on large real-world datasets.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">gensim</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+ 
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+</code></pre></div></div>
+
+<p>The data can be downloaded from command prompt:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>wget <span class="nt">-c</span> <span class="s2">"https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"</span>
+</code></pre></div></div>
+<p>Now we can train the our model directly using <code class="highlighter-rouge">gensim</code> a python module with support to word2vec.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">gensim</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load_word2vec_format</span><span class="p">(</span><span class="s">'GoogleNews-vectors-negative300.bin.gz'</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Test the loaded word2vec model in gensim</span>
+<span class="c"># We will need the raw vector for a word</span>
+<span class="k">print</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="s">'computer'</span><span class="p">])</span> 
+
+<span class="c"># We will also need to get the words closest to a word</span>
+<span class="n">model</span><span class="o">.</span><span class="n">similar_by_word</span><span class="p">(</span><span class="s">'computer'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ 1.07421875e-01 -2.01171875e-01  1.23046875e-01  2.11914062e-01
+ -9.13085938e-02  2.16796875e-01 -1.31835938e-01  8.30078125e-02
+  2.02148438e-01  4.78515625e-02  3.66210938e-02 -2.45361328e-02
+  2.39257812e-02 -1.60156250e-01 -2.61230469e-02  9.71679688e-02
+ -6.34765625e-02  1.84570312e-01  1.70898438e-01 -1.63085938e-01
+ -1.09375000e-01  1.49414062e-01 -4.65393066e-04  9.61914062e-02
+  1.68945312e-01  2.60925293e-03  8.93554688e-02  6.49414062e-02
+  3.56445312e-02 -6.93359375e-02 -1.46484375e-01 -1.21093750e-01
+ -2.27539062e-01  2.45361328e-02 -1.24511719e-01 -3.18359375e-01
+ -2.20703125e-01  1.30859375e-01  3.66210938e-02 -3.63769531e-02
+ -1.13281250e-01  1.95312500e-01  9.76562500e-02  1.26953125e-01
+  6.59179688e-02  6.93359375e-02  1.02539062e-02  1.75781250e-01
+ -1.68945312e-01  1.21307373e-03 -2.98828125e-01 -1.15234375e-01
+  5.66406250e-02 -1.77734375e-01 -2.08984375e-01  1.76757812e-01
+  2.38037109e-02 -2.57812500e-01 -4.46777344e-02  1.88476562e-01
+  5.51757812e-02  5.02929688e-02 -1.06933594e-01  1.89453125e-01
+ -1.16210938e-01  8.49609375e-02 -1.71875000e-01  2.45117188e-01
+ -1.73828125e-01 -8.30078125e-03  4.56542969e-02 -1.61132812e-02
+  1.86523438e-01 -6.05468750e-02 -4.17480469e-02  1.82617188e-01
+  2.20703125e-01 -1.22558594e-01 -2.55126953e-02 -3.08593750e-01
+  9.13085938e-02  1.60156250e-01  1.70898438e-01  1.19628906e-01
+  7.08007812e-02 -2.64892578e-02 -3.08837891e-02  4.06250000e-01
+ -1.01562500e-01  5.71289062e-02 -7.26318359e-03 -9.17968750e-02
+ -1.50390625e-01 -2.55859375e-01  2.16796875e-01 -3.63769531e-02
+  2.24609375e-01  8.00781250e-02  1.56250000e-01  5.27343750e-02
+  1.50390625e-01 -1.14746094e-01 -8.64257812e-02  1.19140625e-01
+ -7.17773438e-02  2.73437500e-01 -1.64062500e-01  7.29370117e-03
+  4.21875000e-01 -1.12792969e-01 -1.35742188e-01 -1.31835938e-01
+ -1.37695312e-01 -7.66601562e-02  6.25000000e-02  4.98046875e-02
+ -1.91406250e-01 -6.03027344e-02  2.27539062e-01  5.88378906e-02
+ -3.24218750e-01  5.41992188e-02 -1.35742188e-01  8.17871094e-03
+ -5.24902344e-02 -1.74713135e-03 -9.81445312e-02 -2.86865234e-02
+  3.61328125e-02  2.15820312e-01  5.98144531e-02 -3.08593750e-01
+ -2.27539062e-01  2.61718750e-01  9.86328125e-02 -5.07812500e-02
+  1.78222656e-02  1.31835938e-01 -5.35156250e-01 -1.81640625e-01
+  1.38671875e-01 -3.10546875e-01 -9.71679688e-02  1.31835938e-01
+ -1.16210938e-01  7.03125000e-02  2.85156250e-01  3.51562500e-02
+ -1.01562500e-01 -3.75976562e-02  1.41601562e-01  1.42578125e-01
+ -5.68847656e-02  2.65625000e-01 -2.09960938e-01  9.64355469e-03
+ -6.68945312e-02 -4.83398438e-02 -6.10351562e-02  2.45117188e-01
+ -9.66796875e-02  1.78222656e-02 -1.27929688e-01 -4.78515625e-02
+ -7.26318359e-03  1.79687500e-01  2.78320312e-02 -2.10937500e-01
+ -1.43554688e-01 -1.27929688e-01  1.73339844e-02 -3.60107422e-03
+ -2.04101562e-01  3.63159180e-03 -1.19628906e-01 -6.15234375e-02
+  5.93261719e-02 -3.23486328e-03 -1.70898438e-01 -3.14941406e-02
+ -8.88671875e-02 -2.89062500e-01  3.44238281e-02 -1.87500000e-01
+  2.94921875e-01  1.58203125e-01 -1.19628906e-01  7.61718750e-02
+  6.39648438e-02 -4.68750000e-02 -6.83593750e-02  1.21459961e-02
+ -1.44531250e-01  4.54101562e-02  3.68652344e-02  3.88671875e-01
+  1.45507812e-01 -2.55859375e-01 -4.46777344e-02 -1.33789062e-01
+ -1.38671875e-01  6.59179688e-02  1.37695312e-01  1.14746094e-01
+  2.03125000e-01 -4.78515625e-02  1.80664062e-02 -8.54492188e-02
+ -2.48046875e-01 -3.39843750e-01 -2.83203125e-02  1.05468750e-01
+ -2.14843750e-01 -8.74023438e-02  7.12890625e-02  1.87500000e-01
+ -1.12304688e-01  2.73437500e-01 -3.26171875e-01 -1.77734375e-01
+ -4.24804688e-02 -2.69531250e-01  6.64062500e-02 -6.88476562e-02
+ -1.99218750e-01 -7.03125000e-02 -2.43164062e-01 -3.66210938e-02
+ -7.37304688e-02 -1.77734375e-01  9.17968750e-02 -1.25000000e-01
+ -1.65039062e-01 -3.57421875e-01 -2.85156250e-01 -1.66992188e-01
+  1.97265625e-01 -1.53320312e-01  2.31933594e-02  2.06054688e-01
+  1.80664062e-01 -2.74658203e-02 -1.92382812e-01 -9.61914062e-02
+ -1.06811523e-02 -4.73632812e-02  6.54296875e-02 -1.25732422e-02
+  1.78222656e-02 -8.00781250e-02 -2.59765625e-01  9.37500000e-02
+ -7.81250000e-02  4.68750000e-02 -2.22167969e-02  1.86767578e-02
+  3.11279297e-02  1.04980469e-02 -1.69921875e-01  2.58789062e-02
+ -3.41796875e-02 -1.44042969e-02 -5.46875000e-02 -8.78906250e-02
+  1.96838379e-03  2.23632812e-01 -1.36718750e-01  1.75781250e-01
+ -1.63085938e-01  1.87500000e-01  3.44238281e-02 -5.63964844e-02
+ -2.27689743e-05  4.27246094e-02  5.81054688e-02 -1.07910156e-01
+ -3.88183594e-02 -2.69531250e-01  3.34472656e-02  9.81445312e-02
+  5.63964844e-02  2.23632812e-01 -5.49316406e-02  1.46484375e-01
+  5.93261719e-02 -2.19726562e-01  6.39648438e-02  1.66015625e-02
+  4.56542969e-02  3.26171875e-01 -3.80859375e-01  1.70898438e-01
+  5.66406250e-02 -1.04492188e-01  1.38671875e-01 -1.57226562e-01
+  3.23486328e-03 -4.80957031e-02 -2.48046875e-01 -6.20117188e-02]
+
+[('computers', 0.79793781042099),
+ ('laptop', 0.6640492081642151),
+ ('laptop_computer', 0.6548866629600525),
+ ('Computer', 0.6473335027694702),
+ ('com_puter', 0.6082081198692322),
+ ('technician_Leonard_Luchko', 0.5662747025489807),
+ ('mainframes_minicomputers', 0.5617724061012268),
+ ('laptop_computers', 0.5585451126098633),
+ ('PC', 0.5539618134498596),
+ ('maker_Dell_DELL.O', 0.5519253611564636)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">display_closestwords_tsnescatterplot</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+    
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">300</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'f'</span><span class="p">)</span>
+    <span class="n">word_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="p">]</span>
+
+    <span class="c"># get close words</span>
+    <span class="n">close_words</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">similar_by_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    
+    <span class="c"># add the vector for each of the closest words to the array</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">model</span><span class="p">[</span><span class="n">word</span><span class="p">]]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">wrd_score</span> <span class="ow">in</span> <span class="n">close_words</span><span class="p">:</span>
+        <span class="n">wrd_vector</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="n">wrd_score</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">word_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrd_score</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">wrd_vector</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        
+    <span class="c"># find tsne coords for 2 dimensions</span>
+    <span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+
+    <span class="n">x_coords</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">y_coords</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="c"># display scatter plot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">word_labels</span><span class="p">,</span> <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s">'offset points'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">x_coords</span><span class="o">.</span><span class="nb">min</span><span class="p">()</span><span class="o">+</span><span class="mf">0.00005</span><span class="p">,</span> <span class="n">x_coords</span><span class="o">.</span><span class="nb">max</span><span class="p">()</span><span class="o">+</span><span class="mf">0.00005</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">y_coords</span><span class="o">.</span><span class="nb">min</span><span class="p">()</span><span class="o">+</span><span class="mf">0.00005</span><span class="p">,</span> <span class="n">y_coords</span><span class="o">.</span><span class="nb">max</span><span class="p">()</span><span class="o">+</span><span class="mf">0.00005</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">display_closestwords_tsnescatterplot</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s">'life'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/blog/figs/2018-09-03-Manifold-Learning/output_7_1.png" alt="png" /></p>
+
+	</div>
+  </div>
+</article>
+
+<!-- tags do not look great like this
+
+  <div class="blog-tags">
+	  Tags: machine-learning, manifold-learning, tsne, t-distributed Stochastic Neighbor Embedding, multidimensional-scaling
+  </div>
+
+-->
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <ul class="pager blog-pager">
+      
+      <li class="previous">
+        <a href="/blog/2018/08/31/Monte-Carlo-Metropolis.html" data-toggle="tooltip" data-placement="top" title="Monte Carlo Algorithms">&larr; Previous Post</a>
+      </li>
+      
+      
+      <li class="next">
+        <a href="/blog/2018/09/07/principal-conponent-analysis.html" data-toggle="tooltip" data-placement="top" title="Principal Conponent Analysis">Next Post &rarr;</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'emanuelfontelles';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
+
+    </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/emanuelfontelles" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  
+		  
+          <li>
+            <a href="mailto:emanuelfontelles@fisica.ufc.br" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://linkedin.com/in/emanuelfontelles" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/7821063/emanuel-fontelles" title="StackOverflow">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  		  
+        </ul>
+        <p class="copyright text-muted">
+		  Emanuel Fontelles
+		  &nbsp;&bull;&nbsp;
+		  2018
+		  
+		  
+	    </p>
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="https://github.com/daattali/beautiful-jekyll">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    <!-- everything has to be repeated twice because on 2016-02-01 GitHub pages migrated to jekyll 3; see bug https://github.com/jekyll/jekyll/issues/4439 -->
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/js/main.js"></script>
+    
+  
+
+
+
+
+  
+  </body>
+</html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Principal Conponent Analysis</title>
+
+  <meta name="author" content="Emanuel Fontelles" />
+
+  
+
+<!-- Add favicon -->
+<link rel="shortcut icon" 
+      type="image/png" 
+      href="/favicon.png" >
+
+  <link rel="alternate" type="application/rss+xml" title="Emanuel Fontelles - Emanuel's personal web page" href="/feed.xml" />
+
+<!-- everything has to be repeated twice because on 2016-02-01 GitHub pages migrated to jekyll 3; see bug https://github.com/jekyll/jekyll/issues/4439 -->
+
+  
+  
+    
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    
+  
+
+  
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  <!-- Facebook OpenGraph tags -->
+  <meta property="og:title" content="Principal Conponent Analysis" />
+  <meta property="og:type" content="website" />
+
+  
+
+  
+  <meta property="og:url" content="http://localhost:4000/blog/2018/09/07/principal-conponent-analysis.html" />
+  
+
+  
+  <meta property="og:image" content="http://localhost:4000/images/emanuel.png" />
+  
+
+  <!-- Twitter tags -->
+  <meta name="twitter:card" content="summary" />
+
+      <!-- Scripts for ggvis from http://ggvis.rstudio.com/0.1/interactivity.html-->
+  <!-- ggvis stuff -->
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/jquery-1.11.0.min.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/jquery-ui/js/jquery-ui-1.10.4.custom.min.js"></script>
+  <script charset="utf-8" src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/d3.min.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/vega.min.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/QuadTree.js"></script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/lodash.min.js"></script>
+  <script>var lodash = _.noConflict();</script>
+  <script src="http://ggvis.rstudio.com/0.1/libs/ggvis/js/ggvis.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://ggvis.rstudio.com/0.1/libs/ggvis/lib/jquery-ui/css/smoothness/jquery-ui-1.10.4.custom.min.css"/>
+  <link rel="stylesheet" type="text/css" href="http://ggvis.rstudio.com/0.1/libs/ggvis/css/ggvis.css"/>
+  <!-- end of ggvis scripts-->
+
+
+</head>
+
+
+  <body>
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://localhost:4000">Emanuel Fontelles</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+	    
+        <li>
+		  <a href="/">Home</a>
+		</li>
+		
+        <li>
+		  <a href="/projects.html">Projects</a>
+		</li>
+		
+        <li>
+		  <a href="/aboutme.html">About Me</a>
+		</li>
+		
+      </ul>
+    </div>
+	
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://localhost:4000 ">
+	      <img class="avatar-img" src="/images/emanuel.png" />
+		</a>
+	  </div>
+	</div>
+	
+	
+  </div>
+</nav>  
+
+    <div role="main" class="container main-content">
+      <h2 id="principal-component-analysis-an-aproach">Principal Component Analysis an aproach</h2>
+
+<p>This post will be commit until the end of month</p>
+
+<h1 align="center"> Principle Component Analysis (PCA) for Data Visualization </h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'seaborn'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="load-iris-dataset">Load Iris Dataset</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="s">"https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># loading dataset into Pandas DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span>
+                 <span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">'sepal length'</span><span class="p">,</span><span class="s">'sepal width'</span><span class="p">,</span><span class="s">'petal length'</span><span class="p">,</span><span class="s">'petal width'</span><span class="p">,</span><span class="s">'target'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal length</th>
+      <th>sepal width</th>
+      <th>petal length</th>
+      <th>petal width</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="standardize-the-data">Standardize the Data</h2>
+
+<p>Since PCA yields a feature subspace that maximizes the variance along the axes, it makes sense to standardize the data, especially, if it was measured on different scales. Although, all features in the Iris dataset were measured in centimeters, let us continue with the transformation of the data onto unit scale (mean=0 and variance=1), which is a requirement for the optimal performance of many machine learning algorithms.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s">'sepal length'</span><span class="p">,</span> <span class="s">'sepal width'</span><span class="p">,</span> <span class="s">'petal length'</span><span class="p">,</span> <span class="s">'petal width'</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s">'target'</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">features</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal length</th>
+      <th>sepal width</th>
+      <th>petal length</th>
+      <th>petal width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.900681</td>
+      <td>1.032057</td>
+      <td>-1.341272</td>
+      <td>-1.312977</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1.143017</td>
+      <td>-0.124958</td>
+      <td>-1.341272</td>
+      <td>-1.312977</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.385353</td>
+      <td>0.337848</td>
+      <td>-1.398138</td>
+      <td>-1.312977</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.506521</td>
+      <td>0.106445</td>
+      <td>-1.284407</td>
+      <td>-1.312977</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-1.021849</td>
+      <td>1.263460</td>
+      <td>-1.341272</td>
+      <td>-1.312977</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="pca-projection-to-2d">PCA Projection to 2D</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">principalComponents</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">principalDf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">principalComponents</span>
+             <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'principal component 1'</span><span class="p">,</span> <span class="s">'principal component 2'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">principalDf</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>principal component 1</th>
+      <th>principal component 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-2.264542</td>
+      <td>0.505704</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-2.086426</td>
+      <td>-0.655405</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-2.367950</td>
+      <td>-0.318477</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-2.304197</td>
+      <td>-0.575368</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-2.388777</td>
+      <td>0.674767</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[[</span><span class="s">'target'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Iris-setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">finalDf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">principalDf</span><span class="p">,</span> <span class="n">df</span><span class="p">[[</span><span class="s">'target'</span><span class="p">]]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">finalDf</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>principal component 1</th>
+      <th>principal component 2</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-2.264542</td>
+      <td>0.505704</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-2.086426</td>
+      <td>-0.655405</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-2.367950</td>
+      <td>-0.318477</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-2.304197</td>
+      <td>-0.575368</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-2.388777</td>
+      <td>0.674767</td>
+      <td>Iris-setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="visualize-2d-projection">Visualize 2D Projection</h2>
+
+<p>Use a PCA projection to 2d to visualize the entire data set. You should plot different classes using different colors or shapes. Do the classes seem well-separated from each other?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Principal Component 1'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Principal Component 2'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'2 Component PCA'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+
+
+<span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Iris-setosa'</span><span class="p">,</span> <span class="s">'Iris-versicolor'</span><span class="p">,</span> <span class="s">'Iris-virginica'</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s">'r'</span><span class="p">,</span> <span class="s">'g'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">target</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span><span class="n">colors</span><span class="p">):</span>
+    <span class="n">indicesToKeep</span> <span class="o">=</span> <span class="n">finalDf</span><span class="p">[</span><span class="s">'target'</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">finalDf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indicesToKeep</span><span class="p">,</span> <span class="s">'principal component 1'</span><span class="p">]</span>
+               <span class="p">,</span> <span class="n">finalDf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indicesToKeep</span><span class="p">,</span> <span class="s">'principal component 2'</span><span class="p">]</span>
+               <span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">color</span>
+               <span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/blog/figs/2018-09-11-Principal-Component-Analysis/output_21_0.png" alt="png" /></p>
+
+<p>The three classes appear to be well separated!</p>
+
+<p>iris-virginica and iris-versicolor could be better separated, but still good!</p>
+
+<h2 id="explained-variance">Explained Variance</h2>
+
+<p>The explained variance tells us how much information (variance) can be attributed to each of the principal components.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0.72770452, 0.23030523])
+</code></pre></div></div>
+
+<p>Together, the first two principal components contain 95.80% of the information. The first principal component contains 72.77% of the variance and the second principal component contains 23.03% of the variance. The third and fourth principal component contained the rest of the variance of the dataset.</p>
+
+<h2 id="what-are-other-applications-of-pca-other-than-visualizing-data">What are other applications of PCA (other than visualizing data)?</h2>
+
+<p>If your learning algorithm is too slow because the input dimension is too high, then using PCA to speed it up is a reasonable choice. (<b>most common application in my opinion</b>). We will see this in the MNIST dataset.</p>
+
+<p>If memory or disk space is limited, PCA allows you to save space in exchange for losing a little of the data’s information. This can be a reasonable tradeoff.</p>
+
+<h2 id="what-are-the-limitations-of-pca">What are the limitations of PCA?</h2>
+
+<ul>
+  <li>PCA is not scale invariant. check: we need to scale our data first.</li>
+  <li>The directions with largest variance are assumed to be of the most interest</li>
+  <li>Only considers orthogonal transformations (rotations) of the original variables</li>
+  <li>PCA is only based on the mean vector and covariance matrix. Some distributions (multivariate normal) are characterized by this, but some are not.</li>
+  <li>If the variables are correlated, PCA can achieve dimension reduction. If not, PCA just orders them according to their variances.</li>
+</ul>
+
+    </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/emanuelfontelles" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  
+		  
+          <li>
+            <a href="mailto:emanuelfontelles@fisica.ufc.br" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://linkedin.com/in/emanuelfontelles" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/7821063/emanuel-fontelles" title="StackOverflow">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		  		  
+        </ul>
+        <p class="copyright text-muted">
+		  Emanuel Fontelles
+		  &nbsp;&bull;&nbsp;
+		  2018
+		  
+		  
+	    </p>
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="https://github.com/daattali/beautiful-jekyll">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    <!-- everything has to be repeated twice because on 2016-02-01 GitHub pages migrated to jekyll 3; see bug https://github.com/jekyll/jekyll/issues/4439 -->
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/js/main.js"></script>
+    
+  
+
+
+
+
+  
+  </body>
+</html>
