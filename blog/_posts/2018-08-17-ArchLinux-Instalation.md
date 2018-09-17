@@ -103,24 +103,32 @@ ArchLinux is an rolling release distribution which means that we don't have an s
 
     pacstrap /mnt base base-devel
 
+In this moment we're downloading the entire system and create the tree of system, with all directories as `\home`, `\etc`, `...`, `\var`.
+
 ### Generate fstab
+We now have to specify to our computer the mount order, for example, which partition has to be mounted as `\boot` partition or `\`. It's can be done running:
 
     genfstab -U /mnt >> /mnt/etc/fstab
 
+After this command the instalation it's almost finished, we have just to install the bootloader, to boot the system properly.
+
 ### Enter the new system
+Once installed, we have to setup the bootloader, but we can configure the entire instalation as hostname, system clock, locale, new users, etc. I'll put this as optional to keep the instalation simple.
 
     arch-chroot /mnt 
-    
-### Setup system clock
+
+#### Optional configuration
+
+##### Setup system clock
 
     ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
     hwclock --systohc --utc
 
-### Set the hostname
+##### Set the hostname
 
     echo MYHOSTNAME > /etc/hostname
 
-### Generate locale
+##### Generate locale
 
 Uncomment wanted locales in /etc/locale.gen
 
@@ -135,12 +143,7 @@ Pay attention to the UTF-8. Capital letters !
     echo LANG=en_US.UTF-8 >> /etc/locale.conf
     echo LC_ALL= >> /etc/locale.conf
 
-
-## Set password for root
-
-    passwd
-
-## Add user
+##### Add user
 
     groupadd MYUSERNAME
     useradd -m -g MYUSERNAME -G wheel,storage,power,network,uucp -s /bin/bash MYUSERNAME
@@ -160,6 +163,13 @@ Pay attention to the UTF-8. Capital letters !
 
     ###Then CTRL + X, now it should prompt you if you want to save, press Y. Now wheel has proper perms. 
     ###"sudo pacman -Syu" will now work properly when you run it to update with your wheel grouped username.###
+
+
+
+##### Set password for root
+
+    passwd
+
     
 ## Configure mkinitcpio with modules needed for the initrd image
 
