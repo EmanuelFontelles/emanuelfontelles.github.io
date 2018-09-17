@@ -15,9 +15,7 @@ When I started to work with computers and Linux based systems, I found myself in
     <em> <a href="https://wiki.archlinux.org/index.php/Arch_Linux"> Read more </a>ArchLinux</em> page.
 </figure>
 
-My
-
-The official installation guide (https://wiki.archlinux.org/index.php/Installation_Guide) contains a more verbose description.
+My intention here is provide a simple instalation guide that will help you to understand how Arch philosophy works. The official installation guide (https://wiki.archlinux.org/index.php/Installation_Guide) is the better way to understand the full instalation of Arch.
 
 ## Download the Arch ISO
 
