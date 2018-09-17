@@ -24,15 +24,28 @@ First of all we can download the ISO from Archlinux website
 
 * Image from https://www.archlinux.org/download/
 
+The image can be burned to a CD, mounted as an ISO file, or be directly written to a USB stick using a utility like `dd`.
+
 ### Copy to a USB drive
 
-    dd if=archlinux.img of=/dev/sdX bs=16M && sync # on linux
+    dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress oflag=sync
+Run the following command, replacing `/dev/sdx` with your drive, e.g. `/dev/sdb`. (Do not append a partition number, so **do not use something like /dev/sdb1**).
 
 ### Boot from USB drive
 
-If the usb fails to boot, make sure that secure boot is disabled in the BIOS configuration.
+The new common way to install operational systems as Linux Systems or even Microsoft Windows is using [UEFI system](https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface) (You can read more about it here). Here we'll use UEFI mode, make sure that secure boot is disabled in the BIOS configuration. To see if you are booted on UEFI mode, just list the directory
 
-## This assumes a wifi only system...
+    ls /sys/firmware/efi/efivars
+    
+if the directory does not exist, the system may be booted in BIOS or CSM mode.
+
+## Internet connection
+
+The ArchLinux instalation enables the `dhcpcd` daemon for wired network devices on boot. The connection may be verified with ping:
+
+    ping archlinux.org
+
+If you have a wifi connection, you can try `wifi-menu` and setup a wireless connection.
 
     wifi-menu
 
