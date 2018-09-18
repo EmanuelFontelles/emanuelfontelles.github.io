@@ -132,7 +132,7 @@
 		</li>
 		
         <li>
-		  <a href="/http://emanuelfontelles.github.io/cv">CV</a>
+		  <a href="/emanuelfontelles.github.io/cv">CV</a>
 		</li>
 		
       </ul>
