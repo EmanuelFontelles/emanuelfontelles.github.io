@@ -29,9 +29,7 @@ avatar: "/images/emanuel.png"
 navbar-links:
   Home: ""
   Projects: "projects.html"
-  About Me:
-	- About me: "aboutme.html"
-	- Curriculum Vitae: ""
+  About Me: "aboutme.html"
 #  Contact: "contact.html"
   
 # --- Footer options --- #
