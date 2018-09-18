@@ -23,14 +23,14 @@ description: Emanuel's personal web page
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
-avatar: "/images/emanuel.png"
+avatar: "/img/avatar-icon.png"
 
 # List of links in the navigation bar
 navbar-links:
   Home: ""
   Projects: "projects.html"
+  About me: "aboutme.html"
   CV: "https://emanuelfontelles.github.io/cv"
-  About Me: "aboutme.html"
   
 # --- Footer options --- #
 

@@ -8,5 +8,5 @@ I'm a PhD student on Complex Systems, an interdisciplinary field of sciences, wo
 
 Please visit my GitHub repository:
 
-[![](/images/github.png)](http://github.com/emanuelfontelles) @emanuelfontelles
+[![](/img/github.png)](http://github.com/emanuelfontelles) @emanuelfontelles
 
