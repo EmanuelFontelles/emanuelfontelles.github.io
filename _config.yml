@@ -29,8 +29,8 @@ avatar: "/img/avatar-icon.png"
 navbar-links:
   Home: ""
   Projects: "projects.html"
-  About me: "aboutme.html"
   CV: "https://emanuelfontelles.github.io/cv"
+  About me: "aboutme.html"
   
 # --- Footer options --- #
 
