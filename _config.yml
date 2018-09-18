@@ -30,8 +30,8 @@ navbar-links:
   Home: ""
   Projects: "projects.html"
   About Me:
-    - About me: "aboutme.html"
-    - Curriculum Vitae: ""
+	- About me: "aboutme.html"
+	- Curriculum Vitae: ""
 #  Contact: "contact.html"
   
 # --- Footer options --- #
