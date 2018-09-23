@@ -1,3 +1,5 @@
-## A New Post
+## Sentiment Analysis of Linear Regression
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+Everyone have done linear regression since child. Think of that, when you was a child you were watching Dragon Ball, an animated cartoon from Akira Toriyama. In story of the cartoon we have differents characters, the good one such Son Goku and bad guys as Vegeta. The cartoon lets us imagine a scale of power, how stronger a new character will be this power scale.
+
+We all love Goku, but whe Manjiboo apears we 
