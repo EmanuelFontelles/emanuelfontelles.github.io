@@ -4,7 +4,7 @@
  <title>Juuso's blog on Open Data Science</title>
  <link href="http://ouzor.github.io/blog/atom.xml" rel="self"/>
  <link href="http://ouzor.github.io/"/>
- <updated>2018-09-18T15:18:37-03:00</updated>
+ <updated>2018-11-26T12:11:15-03:00</updated>
  <id>http://ouzor.github.io/blog</id>
  <author>
    <name>Juuso Parkkinen</name>
@@ -13,254 +13,9 @@
  
  
  <entry>
-   <title>This is ArchLinux - Installation Guide</title>
-   <link href="http://ouzor.github.io/blog/ArchLinux-Instalation.html"/>
-   <updated>2018-09-17T00:00:00-03:00</updated>
-   <id>id:/blog/ArchLinux-Instalation</id>
-   <content type="html">&lt;h2 id=&quot;welcome-to-freedom&quot;&gt;Welcome to freedom&lt;/h2&gt;
-
-&lt;p&gt;When I started to work with computers and Linux based systems, I found myself in Ubuntu distributions, Ubuntu 10.04 was one of the bests. With time and experience I tried Debian OS, Elementary OS, LinuxMint OS, RedHat, but all theses systems seems to be the same. I don’t know but I can’t stop to search for the best distro for me. Until the ArchLinux show up!&lt;/p&gt;
-
-&lt;center&gt;
-    &lt;figure&gt;
-        &lt;img src=&quot;/blog/figs/2018-08-17-archlinux-instalation/cover.png&quot; width=&quot;304&quot; height=&quot;228&quot; alt=&quot;Cover&quot; /&gt;
-        &lt;br /&gt;
-        &lt;em&gt; &lt;a href=&quot;https://wiki.archlinux.org/index.php/Arch_Linux&quot;&gt; Read more &lt;/a&gt;ArchLinux&lt;/em&gt; page.
-    &lt;/figure&gt;
-&lt;/center&gt;
-
-&lt;p&gt;My intention here is provide a simple installation guide that will help you to understand how Arch philosophy works. The &lt;a href=&quot;https://wiki.archlinux.org/index.php/Installation_Guide&quot;&gt;official installation guide&lt;/a&gt; is the better way to understand the full installation of Arch.&lt;/p&gt;
-
-&lt;h2 id=&quot;download-the-arch-iso&quot;&gt;Download the Arch ISO&lt;/h2&gt;
-&lt;p&gt;First of all we can download the ISO from Archlinux website&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Image from https://www.archlinux.org/download/&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The image can be burned to a CD, mounted as an ISO file, or be directly written to a USB stick using a utility like &lt;code class=&quot;highlighter-rouge&quot;&gt;dd&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;copy-to-a-usb-drive&quot;&gt;Copy to a USB drive&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress oflag=sync
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Run the following command, replacing &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sdx&lt;/code&gt; with your drive, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sdb&lt;/code&gt;. (Do not append a partition number, so &lt;strong&gt;do not use something like /dev/sdb1&lt;/strong&gt;).&lt;/p&gt;
-
-&lt;h3 id=&quot;boot-from-usb-drive&quot;&gt;Boot from USB drive&lt;/h3&gt;
-
-&lt;p&gt;The new common way to install operational systems as Linux Systems or even Microsoft Windows is using &lt;a href=&quot;https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface&quot;&gt;UEFI system&lt;/a&gt; (You can read more about it here). Here we’ll use UEFI mode, make sure that secure boot is disabled in the BIOS configuration. To see if you are booted on UEFI mode, just list the directory&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls /sys/firmware/efi/efivars
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;if the directory does not exist, the system may be booted in BIOS or CSM mode.&lt;/p&gt;
-
-&lt;h2 id=&quot;setup-the-environment&quot;&gt;Setup the environment&lt;/h2&gt;
-
-&lt;h3 id=&quot;internet-connection&quot;&gt;Internet connection&lt;/h3&gt;
-
-&lt;p&gt;The ArchLinux installation enables the &lt;code class=&quot;highlighter-rouge&quot;&gt;dhcpcd&lt;/code&gt; daemon for wired network devices on boot. The connection may be verified with ping:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ping archlinux.org
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you have a wifi connection, you can try &lt;code class=&quot;highlighter-rouge&quot;&gt;wifi-menu&lt;/code&gt; and setup a wireless connection.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wifi-menu
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;create-partitions&quot;&gt;Create partitions&lt;/h3&gt;
-
-&lt;p&gt;This part can be a realy trick one. ArchLinux need just to partition, the &lt;code class=&quot;highlighter-rouge&quot;&gt;\boot&lt;/code&gt; partition (that needs to be format as &lt;strong&gt;FAT32&lt;/strong&gt;) and the &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt;, the root partition. You can create more as &lt;code class=&quot;highlighter-rouge&quot;&gt;\home&lt;/code&gt; partition that keeps the users data.&lt;/p&gt;
-
-&lt;p&gt;To create the partitions I’ll use &lt;code class=&quot;highlighter-rouge&quot;&gt;fdisk&lt;/code&gt;, a simple manager to create a table partition. You can use &lt;code class=&quot;highlighter-rouge&quot;&gt;cfdisk&lt;/code&gt; if you want. First, identify the label of yours partitions&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fdisk -l
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;the command above will show the disk attached to your computer such as &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sda&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/nvme0n1&lt;/code&gt;. Now you can create a new table of partition as GPT partition table, with to partition, &lt;code class=&quot;highlighter-rouge&quot;&gt;\boot&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fdisk /dev/sda
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;you can learn about fdisk &lt;a href=&quot;https://wiki.archlinux.org/index.php/Fdisk&quot;&gt;here&lt;/a&gt;. Basically you have to create a 500 Mb partition to that will be a boot partition and the rest to root partition. The result will be something like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Disk /dev/sda: 465.8 GiB, 500107862016 bytes, 976773168 sectors
-Units: sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disklabel type: gpt
-Disk identifier: 7D918645-8068-4E41-AB42-A411242F4546
-
-Device         Start       End   Sectors   Size Type
-/dev/sda1       2048   1023999   1021952   499M EFI System
-/dev/sda2    1023999 976773119 659331072 464.4G Linux filesystem
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;format-the-partitions&quot;&gt;Format the partitions&lt;/h3&gt;
-&lt;p&gt;Once the partitions have been created, each must be formatted with an appropriate file system. For example, to format the boot partition on &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sda1&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;FAT32&lt;/code&gt;, run:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkfs.vfat -F32 -n EFI /dev/sda1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;and to format the root partition on &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sda2&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;ext4&lt;/code&gt;, run:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkfs.ext4 /dev/sda2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;mount-the-new-system&quot;&gt;Mount the new system&lt;/h3&gt;
-&lt;p&gt;Now it’s time to mount the file system on the root partition to &lt;code class=&quot;highlighter-rouge&quot;&gt;/mnt&lt;/code&gt;, for example:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mount /dev/sda2 /mnt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Once the file system was mounted, we can create a different folder that will contain the &lt;code class=&quot;highlighter-rouge&quot;&gt;boot&lt;/code&gt; files&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir /mnt/boot
-mount /dev/sda1 /mnt/boot
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;We finished the environment to create the ArchLinux installation.&lt;/p&gt;
-
-&lt;h2 id=&quot;installing-the-system&quot;&gt;Installing the system&lt;/h2&gt;
-
-&lt;p&gt;ArchLinux is an rolling release distribution which means that we don’t have an specific version. So, to install the entire system with a minimal base package we can do&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pacstrap /mnt base base-devel
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;In this moment we’re downloading the entire system and create the tree of system, with all directories as &lt;code class=&quot;highlighter-rouge&quot;&gt;\home&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;\etc&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;...&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;\var&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;generate-fstab&quot;&gt;Generate fstab&lt;/h3&gt;
-&lt;p&gt;We now have to specify to our computer the mount order, for example, which partition has to be mounted as &lt;code class=&quot;highlighter-rouge&quot;&gt;\boot&lt;/code&gt; partition or &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt;. It’s can be done running:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;After this command the installation it’s almost finished, we have just to install the bootloader, to boot the system properly.&lt;/p&gt;
-
-&lt;h3 id=&quot;enter-the-new-system&quot;&gt;Enter the new system&lt;/h3&gt;
-&lt;p&gt;Once installed, we have to setup the bootloader, but we can configure the entire installation as hostname, system clock, locale, new users, etc. I’ll put this as optional to keep the installation simple.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;arch-chroot /mnt 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you wanna do it, following the next section, if not, you can skip to setup the &lt;code class=&quot;highlighter-rouge&quot;&gt;mkinitcpio&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;optional-configuration&quot;&gt;Optional configuration&lt;/h4&gt;
-&lt;p&gt;This is some simple configurations that can be done after the installation, but you can do right now.&lt;/p&gt;
-
-&lt;h5 id=&quot;setup-system-clock&quot;&gt;Setup system clock&lt;/h5&gt;
-&lt;p&gt;In my case, I live in Fortaleza/CE - Brazil, here is the way that I set my time:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ln -s /usr/share/zoneinfo/America/Fortaleza /etc/localtime
-hwclock --systohc --utc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You can see the right locale to your place &lt;a href=&quot;https://wiki.archlinux.org/index.php/Time#Time_zone&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h5 id=&quot;set-the-hostname&quot;&gt;Set the hostname&lt;/h5&gt;
-&lt;p&gt;The hostname is your machine name’s, for example &lt;code class=&quot;highlighter-rouge&quot;&gt;belchior&lt;/code&gt;, and you can set as follows&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo belchior &amp;gt; /etc/hostname
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;generate-locale&quot;&gt;Generate locale&lt;/h5&gt;
-&lt;p&gt;This is how your computer will setup the language and characters. Uncomment wanted locales in /etc/locale.gen&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim /etc/locale.gen
-locale-gen
-localectl set-locale LANG=en_US.UTF-8
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To avoid problems with &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-terminal&lt;/code&gt; set locale system wide&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo LANG=en_US.UTF-8 &amp;gt;&amp;gt; /etc/locale.conf
-echo LC_ALL= &amp;gt;&amp;gt; /etc/locale.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Pay attention to the UTF-8. Capital letters!&lt;/p&gt;
-
-&lt;h5 id=&quot;add-user&quot;&gt;Add user&lt;/h5&gt;
-&lt;p&gt;Here you can add differents users to your machine&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;useradd -m -g users -G wheel &amp;lt;username&amp;gt;
-passwd &amp;lt;username&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You can setup the new user to install as administrator&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;EDITOR=nano visudo
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Inside visudo, find the line that says &lt;em&gt;“Uncomment to allow members of group wheel to execute any command”&lt;/em&gt;. Just remove the comment from &lt;strong&gt;#%wheel ALL=(ALL) ALL&lt;/strong&gt;. It should now look like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;%wheel ALL=(ALL) ALL 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then CTRL + X, now it should prompt you if you want to save, press Y. Now wheel has proper permissions.&lt;/p&gt;
-
-&lt;h5 id=&quot;set-password-for-root&quot;&gt;Set password for root&lt;/h5&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;passwd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;starting-dhcpcd-service-on-boot&quot;&gt;Starting &lt;code class=&quot;highlighter-rouge&quot;&gt;dhcpcd&lt;/code&gt; service on boot&lt;/h5&gt;
-&lt;p&gt;This will provide an dynamic internet IP to your machine&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl enable dhcpcd.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;installing-bootloader&quot;&gt;Installing bootloader&lt;/h4&gt;
-&lt;p&gt;I chose the most common bootloader, &lt;a href=&quot;https://wiki.archlinux.org/index.php/GRUB&quot;&gt;&lt;strong&gt;grub&lt;/strong&gt;&lt;/a&gt;, as always you can chose whatever you want, this is ArchLinux philosophy. To install &lt;code class=&quot;highlighter-rouge&quot;&gt;grub&lt;/code&gt; you can just type&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pacman -S  grub efibootmgr
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Once &lt;code class=&quot;highlighter-rouge&quot;&gt;grub&lt;/code&gt; was installed you have to install grub directories on your &lt;code class=&quot;highlighter-rouge&quot;&gt;\boot&lt;/code&gt; partition&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now you can create the configuration file the will boot your system&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;grub-mkconfig -o /boot/grub/grub.cfg
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;youve-finished&quot;&gt;You’ve finished&lt;/h3&gt;
-&lt;p&gt;Yeah, congrats! You’ve finished the ArchLinux installation, you can exit from the installed system just typing&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;exit
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Reboot into the new system, don’t forget to remove the cd/usb.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;reboot
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;after-installation&quot;&gt;After installation&lt;/h2&gt;
-
-&lt;p&gt;If you finished all this tutorial, probabily you want to install some interface as &lt;a href=&quot;https://wiki.archlinux.org/index.php/GNOME&quot;&gt;Gnome&lt;/a&gt;. To do this you have to install some packages as &lt;code class=&quot;highlighter-rouge&quot;&gt;X-org&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pacman -S xorg xorg-xinit gnome gnome-shell
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;After the installation just start the &lt;a href=&quot;https://wiki.archlinux.org/index.php/GDM&quot;&gt;GDM&lt;/a&gt; service that’s provides the graphical managements of users.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl enable gdm.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, reboot one more time and the installation will be finished.&lt;/p&gt;
-
-&lt;p&gt;Best regards.&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
    <title>Principal Component Analysis</title>
    <link href="http://ouzor.github.io/blog/Principal-Component-Analysis.html"/>
-   <updated>2018-09-10T00:00:00-03:00</updated>
+   <updated>2018-09-24T00:00:00-03:00</updated>
    <id>id:/blog/Principal-Component-Analysis</id>
    <content type="html">&lt;h2 id=&quot;principal-component-analysis-an-aproach&quot;&gt;Principal Component Analysis an aproach&lt;/h2&gt;
 
@@ -679,9 +434,28 @@ passwd &amp;lt;username&amp;gt;
  </entry>
  
  <entry>
+   <title>Linear Regression</title>
+   <link href="http://ouzor.github.io/blog/Linear-Regression.html"/>
+   <updated>2018-09-23T00:00:00-03:00</updated>
+   <id>id:/blog/Linear-Regression</id>
+   <content type="html">&lt;h2 id=&quot;sentiment-analysis-of-linear-regression&quot;&gt;Sentiment Analysis of Linear Regression&lt;/h2&gt;
+
+&lt;p&gt;Everyone have done linear regression since child. Think of that, when you was a child you were watching Dragon Ball, an animated cartoon from Akira Toriyama. In story of the cartoon we have differents characters, the good one such Son Goku and bad guys as Vegeta. The cartoon lets us imagine a scale of power, how stronger a new character will be this power scale.&lt;/p&gt;
+
+&lt;p&gt;We all love Goku, but when Manjiboo apears we&lt;/p&gt;
+
+&lt;h3 id=&quot;cost-function&quot;&gt;Cost Function&lt;/h3&gt;
+
+&lt;h3 id=&quot;gradient-descent&quot;&gt;Gradient Descent&lt;/h3&gt;
+
+&lt;h3 id=&quot;univariate-linear-regression&quot;&gt;Univariate Linear Regression&lt;/h3&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Manifold Learning</title>
    <link href="http://ouzor.github.io/blog/Manifold-Learning.html"/>
-   <updated>2018-09-03T00:00:00-03:00</updated>
+   <updated>2018-09-22T00:00:00-03:00</updated>
    <id>id:/blog/Manifold-Learning</id>
    <content type="html">&lt;h1 id=&quot;using-t-sne-to-visualize-similar-words-from-texts&quot;&gt;Using t-SNE to visualize similar words from texts&lt;/h1&gt;
 
@@ -842,6 +616,251 @@ passwd &amp;lt;username&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img src=&quot;/blog/figs/2018-09-03-Manifold-Learning/output_7_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>This is ArchLinux - Installation Guide</title>
+   <link href="http://ouzor.github.io/blog/ArchLinux-Instalation.html"/>
+   <updated>2018-09-17T00:00:00-03:00</updated>
+   <id>id:/blog/ArchLinux-Instalation</id>
+   <content type="html">&lt;h2 id=&quot;welcome-to-freedom&quot;&gt;Welcome to freedom&lt;/h2&gt;
+
+&lt;p&gt;When I started to work with computers and Linux based systems, I found myself in Ubuntu distributions, Ubuntu 10.04 was one of the bests. With time and experience I tried Debian OS, Elementary OS, LinuxMint OS, RedHat, but all theses systems seems to be the same. I don’t know but I can’t stop to search for the best distro for me. Until the ArchLinux show up!&lt;/p&gt;
+
+&lt;center&gt;
+    &lt;figure&gt;
+        &lt;img src=&quot;/blog/figs/2018-08-17-archlinux-instalation/cover.png&quot; width=&quot;304&quot; height=&quot;228&quot; alt=&quot;Cover&quot; /&gt;
+        &lt;br /&gt;
+        &lt;em&gt; &lt;a href=&quot;https://wiki.archlinux.org/index.php/Arch_Linux&quot;&gt; Read more &lt;/a&gt;ArchLinux&lt;/em&gt; page.
+    &lt;/figure&gt;
+&lt;/center&gt;
+
+&lt;p&gt;My intention here is provide a simple installation guide that will help you to understand how Arch philosophy works. The &lt;a href=&quot;https://wiki.archlinux.org/index.php/Installation_Guide&quot;&gt;official installation guide&lt;/a&gt; is the better way to understand the full installation of Arch.&lt;/p&gt;
+
+&lt;h2 id=&quot;download-the-arch-iso&quot;&gt;Download the Arch ISO&lt;/h2&gt;
+&lt;p&gt;First of all we can download the ISO from Archlinux website&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Image from https://www.archlinux.org/download/&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The image can be burned to a CD, mounted as an ISO file, or be directly written to a USB stick using a utility like &lt;code class=&quot;highlighter-rouge&quot;&gt;dd&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;copy-to-a-usb-drive&quot;&gt;Copy to a USB drive&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress oflag=sync
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Run the following command, replacing &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sdx&lt;/code&gt; with your drive, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sdb&lt;/code&gt;. (Do not append a partition number, so &lt;strong&gt;do not use something like /dev/sdb1&lt;/strong&gt;).&lt;/p&gt;
+
+&lt;h3 id=&quot;boot-from-usb-drive&quot;&gt;Boot from USB drive&lt;/h3&gt;
+
+&lt;p&gt;The new common way to install operational systems as Linux Systems or even Microsoft Windows is using &lt;a href=&quot;https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface&quot;&gt;UEFI system&lt;/a&gt; (You can read more about it here). Here we’ll use UEFI mode, make sure that secure boot is disabled in the BIOS configuration. To see if you are booted on UEFI mode, just list the directory&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls /sys/firmware/efi/efivars
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;if the directory does not exist, the system may be booted in BIOS or CSM mode.&lt;/p&gt;
+
+&lt;h2 id=&quot;setup-the-environment&quot;&gt;Setup the environment&lt;/h2&gt;
+
+&lt;h3 id=&quot;internet-connection&quot;&gt;Internet connection&lt;/h3&gt;
+
+&lt;p&gt;The ArchLinux installation enables the &lt;code class=&quot;highlighter-rouge&quot;&gt;dhcpcd&lt;/code&gt; daemon for wired network devices on boot. The connection may be verified with ping:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ping archlinux.org
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you have a wifi connection, you can try &lt;code class=&quot;highlighter-rouge&quot;&gt;wifi-menu&lt;/code&gt; and setup a wireless connection.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wifi-menu
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;create-partitions&quot;&gt;Create partitions&lt;/h3&gt;
+
+&lt;p&gt;This part can be a realy trick one. ArchLinux need just to partition, the &lt;code class=&quot;highlighter-rouge&quot;&gt;\boot&lt;/code&gt; partition (that needs to be format as &lt;strong&gt;FAT32&lt;/strong&gt;) and the &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt;, the root partition. You can create more as &lt;code class=&quot;highlighter-rouge&quot;&gt;\home&lt;/code&gt; partition that keeps the users data.&lt;/p&gt;
+
+&lt;p&gt;To create the partitions I’ll use &lt;code class=&quot;highlighter-rouge&quot;&gt;fdisk&lt;/code&gt;, a simple manager to create a table partition. You can use &lt;code class=&quot;highlighter-rouge&quot;&gt;cfdisk&lt;/code&gt; if you want. First, identify the label of yours partitions&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fdisk -l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;the command above will show the disk attached to your computer such as &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sda&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/nvme0n1&lt;/code&gt;. Now you can create a new table of partition as GPT partition table, with to partition, &lt;code class=&quot;highlighter-rouge&quot;&gt;\boot&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fdisk /dev/sda
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;you can learn about fdisk &lt;a href=&quot;https://wiki.archlinux.org/index.php/Fdisk&quot;&gt;here&lt;/a&gt;. Basically you have to create a 500 Mb partition to that will be a boot partition and the rest to root partition. The result will be something like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Disk /dev/sda: 465.8 GiB, 500107862016 bytes, 976773168 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 7D918645-8068-4E41-AB42-A411242F4546
+
+Device         Start       End   Sectors   Size Type
+/dev/sda1       2048   1023999   1021952   499M EFI System
+/dev/sda2    1023999 976773119 659331072 464.4G Linux filesystem
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;format-the-partitions&quot;&gt;Format the partitions&lt;/h3&gt;
+&lt;p&gt;Once the partitions have been created, each must be formatted with an appropriate file system. For example, to format the boot partition on &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sda1&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;FAT32&lt;/code&gt;, run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkfs.vfat -F32 -n EFI /dev/sda1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and to format the root partition on &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/sda2&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;ext4&lt;/code&gt;, run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkfs.ext4 /dev/sda2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;mount-the-new-system&quot;&gt;Mount the new system&lt;/h3&gt;
+&lt;p&gt;Now it’s time to mount the file system on the root partition to &lt;code class=&quot;highlighter-rouge&quot;&gt;/mnt&lt;/code&gt;, for example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mount /dev/sda2 /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once the file system was mounted, we can create a different folder that will contain the &lt;code class=&quot;highlighter-rouge&quot;&gt;boot&lt;/code&gt; files&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir /mnt/boot
+mount /dev/sda1 /mnt/boot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We finished the environment to create the ArchLinux installation.&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-the-system&quot;&gt;Installing the system&lt;/h2&gt;
+
+&lt;p&gt;ArchLinux is an rolling release distribution which means that we don’t have an specific version. So, to install the entire system with a minimal base package we can do&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pacstrap /mnt base base-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In this moment we’re downloading the entire system and create the tree of system, with all directories as &lt;code class=&quot;highlighter-rouge&quot;&gt;\home&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;\etc&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;...&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;\var&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;generate-fstab&quot;&gt;Generate fstab&lt;/h3&gt;
+&lt;p&gt;We now have to specify to our computer the mount order, for example, which partition has to be mounted as &lt;code class=&quot;highlighter-rouge&quot;&gt;\boot&lt;/code&gt; partition or &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt;. It’s can be done running:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After this command the installation it’s almost finished, we have just to install the bootloader, to boot the system properly.&lt;/p&gt;
+
+&lt;h3 id=&quot;enter-the-new-system&quot;&gt;Enter the new system&lt;/h3&gt;
+&lt;p&gt;Once installed, we have to setup the bootloader, but we can configure the entire installation as hostname, system clock, locale, new users, etc. I’ll put this as optional to keep the installation simple.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;arch-chroot /mnt 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you wanna do it, following the next section, if not, you can skip to setup the &lt;code class=&quot;highlighter-rouge&quot;&gt;mkinitcpio&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;optional-configuration&quot;&gt;Optional configuration&lt;/h4&gt;
+&lt;p&gt;This is some simple configurations that can be done after the installation, but you can do right now.&lt;/p&gt;
+
+&lt;h5 id=&quot;setup-system-clock&quot;&gt;Setup system clock&lt;/h5&gt;
+&lt;p&gt;In my case, I live in Fortaleza/CE - Brazil, here is the way that I set my time:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ln -s /usr/share/zoneinfo/America/Fortaleza /etc/localtime
+hwclock --systohc --utc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can see the right locale to your place &lt;a href=&quot;https://wiki.archlinux.org/index.php/Time#Time_zone&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h5 id=&quot;set-the-hostname&quot;&gt;Set the hostname&lt;/h5&gt;
+&lt;p&gt;The hostname is your machine name’s, for example &lt;code class=&quot;highlighter-rouge&quot;&gt;belchior&lt;/code&gt;, and you can set as follows&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo belchior &amp;gt; /etc/hostname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;generate-locale&quot;&gt;Generate locale&lt;/h5&gt;
+&lt;p&gt;This is how your computer will setup the language and characters. Uncomment wanted locales in /etc/locale.gen&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim /etc/locale.gen
+locale-gen
+localectl set-locale LANG=en_US.UTF-8
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To avoid problems with &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-terminal&lt;/code&gt; set locale system wide&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo LANG=en_US.UTF-8 &amp;gt;&amp;gt; /etc/locale.conf
+echo LC_ALL= &amp;gt;&amp;gt; /etc/locale.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Pay attention to the UTF-8. Capital letters!&lt;/p&gt;
+
+&lt;h5 id=&quot;add-user&quot;&gt;Add user&lt;/h5&gt;
+&lt;p&gt;Here you can add differents users to your machine&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;useradd -m -g users -G wheel &amp;lt;username&amp;gt;
+passwd &amp;lt;username&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can setup the new user to install as administrator&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;EDITOR=nano visudo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Inside visudo, find the line that says &lt;em&gt;“Uncomment to allow members of group wheel to execute any command”&lt;/em&gt;. Just remove the comment from &lt;strong&gt;#%wheel ALL=(ALL) ALL&lt;/strong&gt;. It should now look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;%wheel ALL=(ALL) ALL 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then CTRL + X, now it should prompt you if you want to save, press Y. Now wheel has proper permissions.&lt;/p&gt;
+
+&lt;h5 id=&quot;set-password-for-root&quot;&gt;Set password for root&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;passwd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;starting-dhcpcd-service-on-boot&quot;&gt;Starting &lt;code class=&quot;highlighter-rouge&quot;&gt;dhcpcd&lt;/code&gt; service on boot&lt;/h5&gt;
+&lt;p&gt;This will provide an dynamic internet IP to your machine&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl enable dhcpcd.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;installing-bootloader&quot;&gt;Installing bootloader&lt;/h4&gt;
+&lt;p&gt;I chose the most common bootloader, &lt;a href=&quot;https://wiki.archlinux.org/index.php/GRUB&quot;&gt;&lt;strong&gt;grub&lt;/strong&gt;&lt;/a&gt;, as always you can chose whatever you want, this is ArchLinux philosophy. To install &lt;code class=&quot;highlighter-rouge&quot;&gt;grub&lt;/code&gt; you can just type&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pacman -S  grub efibootmgr
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once &lt;code class=&quot;highlighter-rouge&quot;&gt;grub&lt;/code&gt; was installed you have to install grub directories on your &lt;code class=&quot;highlighter-rouge&quot;&gt;\boot&lt;/code&gt; partition&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now you can create the configuration file the will boot your system&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;youve-finished&quot;&gt;You’ve finished&lt;/h3&gt;
+&lt;p&gt;Yeah, congrats! You’ve finished the ArchLinux installation, you can exit from the installed system just typing&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;exit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Reboot into the new system, don’t forget to remove the cd/usb.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;after-installation&quot;&gt;After installation&lt;/h2&gt;
+
+&lt;p&gt;If you finished all this tutorial, probabily you want to install some interface as &lt;a href=&quot;https://wiki.archlinux.org/index.php/GNOME&quot;&gt;Gnome&lt;/a&gt;. To do this you have to install some packages as &lt;code class=&quot;highlighter-rouge&quot;&gt;X-org&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pacman -S xorg xorg-xinit gnome gnome-shell
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After the installation just start the &lt;a href=&quot;https://wiki.archlinux.org/index.php/GDM&quot;&gt;GDM&lt;/a&gt; service that’s provides the graphical managements of users.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl enable gdm.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, reboot one more time and the installation will be finished.&lt;/p&gt;
+
+&lt;p&gt;Best regards.&lt;/p&gt;
 </content>
  </entry>
  

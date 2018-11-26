@@ -7,25 +7,25 @@
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>This is ArchLinux - Installation Guide</title>
-        <description>
-          A quick introduction - 
-          Welcome to freedom When I started to work with computers and Linux based systems, I found myself in Ubuntu distributions, Ubuntu 10.04 was one of the bests. With time and experience I tried Debian OS, Elementary OS, LinuxMint OS, RedHat, but all theses systems seems to be the same. I...
-        </description>
-        <pubDate>Mon, 17 Sep 2018 00:00:00 -0300</pubDate>
-        <link>http://localhost:4000/blog/ArchLinux-Instalation.html</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/ArchLinux-Instalation.html</guid>
-      </item>
-    
-      <item>
         <title>Principal Component Analysis</title>
         <description>
           
           Principal Component Analysis an aproach This post will be commit until the end of month Principle Component Analysis (PCA) for Data Visualization import pandas as pd import numpy as np import matplotlib.pyplot as plt from sklearn.decomposition import PCA from sklearn.preprocessing import StandardScaler %matplotlib inline plt.style.use('seaborn') Load Iris Dataset url =...
         </description>
-        <pubDate>Mon, 10 Sep 2018 00:00:00 -0300</pubDate>
+        <pubDate>Mon, 24 Sep 2018 00:00:00 -0300</pubDate>
         <link>http://localhost:4000/blog/Principal-Component-Analysis.html</link>
         <guid isPermaLink="true">http://localhost:4000/blog/Principal-Component-Analysis.html</guid>
+      </item>
+    
+      <item>
+        <title>Linear Regression</title>
+        <description>
+          
+          Sentiment Analysis of Linear Regression Everyone have done linear regression since child. Think of that, when you was a child you were watching Dragon Ball, an animated cartoon from Akira Toriyama. In story of the cartoon we have differents characters, the good one such Son Goku and bad guys as...
+        </description>
+        <pubDate>Sun, 23 Sep 2018 00:00:00 -0300</pubDate>
+        <link>http://localhost:4000/blog/Linear-Regression.html</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/Linear-Regression.html</guid>
       </item>
     
       <item>
@@ -34,9 +34,20 @@
           t-SNE  - 
           Using t-SNE to visualize similar words from texts First of all install dependencies $ pip install gensim numpy matplotlib sklearn We want to visualize the classification cluster from a data set, in our case it’s a text, and we expect to classify the words in the text to clusters with...
         </description>
-        <pubDate>Mon, 03 Sep 2018 00:00:00 -0300</pubDate>
+        <pubDate>Sat, 22 Sep 2018 00:00:00 -0300</pubDate>
         <link>http://localhost:4000/blog/Manifold-Learning.html</link>
         <guid isPermaLink="true">http://localhost:4000/blog/Manifold-Learning.html</guid>
+      </item>
+    
+      <item>
+        <title>This is ArchLinux - Installation Guide</title>
+        <description>
+          A quick introduction - 
+          Welcome to freedom When I started to work with computers and Linux based systems, I found myself in Ubuntu distributions, Ubuntu 10.04 was one of the bests. With time and experience I tried Debian OS, Elementary OS, LinuxMint OS, RedHat, but all theses systems seems to be the same. I...
+        </description>
+        <pubDate>Mon, 17 Sep 2018 00:00:00 -0300</pubDate>
+        <link>http://localhost:4000/blog/ArchLinux-Instalation.html</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/ArchLinux-Instalation.html</guid>
       </item>
     
       <item>
