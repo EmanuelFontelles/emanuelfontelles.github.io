@@ -12,6 +12,7 @@ About Data Science, I found my passion. This science field give to me another re
 give me a purpose as scientist.
 
 As data scientist I solve business problems related to Credit Risk Management, modelling and implementing solution with Machine Learning and Business Inteligence. Here are some of my projects that I solve daily:
+
     - Credit Risk score to negatived people
     - Fraud Detection
 
