@@ -7,6 +7,8 @@ tags : [archlinux]
 
 ## From a binary class pespective
 
+1+1=3
+
 ## As simple as Logistic Regression
 
 
