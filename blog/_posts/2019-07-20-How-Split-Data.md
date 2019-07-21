@@ -59,6 +59,14 @@ dist = sns.distplot(log_normal)
 ```
 
 
+<center>
+    <figure>
+        <img src="/blog/figs/blog/figs/2019-07-20-Random-Split/output_5_0.png"  width="304" height="228" alt="Cover" >
+        <br>
+        <em> <a href="https://wiki.archlinux.org/index.php/Arch_Linux"> Read more </a>ArchLinux</em> page.
+    </figure>
+</center> 
+
 ![png](output_5_0.png)
 
 
@@ -89,7 +97,13 @@ var_log_sample, mean_log_sample
 dist_sample = sns.distplot(log_normal_sample)
 ```
 
-
+<center>
+    <figure>
+        <img src="/blog/figs/blog/figs/2019-07-20-Random-Split/output_9_0.png"  width="304" height="228" alt="Cover" >
+        <br>
+        <em> <a href="https://wiki.archlinux.org/index.php/Arch_Linux"> Read more </a>ArchLinux</em> page.
+    </figure>
+</center> 
 ![png](output_9_0.png)
 
 
