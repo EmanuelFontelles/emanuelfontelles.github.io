@@ -28,7 +28,7 @@ avatar: "/img/avatar-icon.jpeg"
 # List of links in the navigation bar
 navbar-links:
   Home: ""
-  Projects: "projects.html"
+  Posts: "posts.html"
   About me: "aboutme.html"
   CV: "https://emanuelfontelles.github.io/vitae"
   
@@ -38,7 +38,7 @@ navbar-links:
 # Important: you must keep the "name" parameter, everything else you can remove
 author:
   name: Emanuel Fontelles
-  email: "emanuelfontelles@fisica.ufc.br"
+  email: "emanuelfontelles@hotmail.com"
 #  twitter: ouzor   # eg. daattali
   github: emanuelfontelles    # eg. daattali
   linkedin: in/emanuelfontelles  # eg. "pub/dean-attali/8/946/143"
